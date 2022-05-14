@@ -2,6 +2,7 @@ package tw.edu.pu.s1092788.final_exam
 
 import android.content.pm.ActivityInfo
 import android.graphics.Canvas
+import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.GestureDetector
@@ -13,6 +14,7 @@ import com.bumptech.glide.module.AppGlideModule
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
 import tw.edu.pu.s1092788.final_exam.databinding.ActivityMainBinding
+import java.util.*
 
 
 @GlideModule
@@ -22,7 +24,8 @@ class MainActivity : AppCompatActivity(),GestureDetector.OnGestureListener,View.
 
     lateinit var binding: ActivityMainBinding
     lateinit var gDetector: GestureDetector
-
+    lateinit var mper: MediaPlayer
+    var control:Boolean=false
     var check:Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         lateinit var job: Job
@@ -30,7 +33,7 @@ class MainActivity : AppCompatActivity(),GestureDetector.OnGestureListener,View.
         super.onCreate(savedInstanceState)
         //setContentView(R.layout.activity_main)
         gDetector = GestureDetector(this, this)
-
+        mper = MediaPlayer()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -77,7 +80,7 @@ class MainActivity : AppCompatActivity(),GestureDetector.OnGestureListener,View.
 
         switch = GlobalScope.launch(Dispatchers.Main) {
             while (true) {
-                if(check) {
+                if(check && !control) {
                     fly.setImageResource(R.drawable.fly2)
                     delay(100)
                     fly.setImageResource(R.drawable.fly1)
@@ -96,9 +99,11 @@ class MainActivity : AppCompatActivity(),GestureDetector.OnGestureListener,View.
         if (event?.action == MotionEvent.ACTION_MOVE && check){
             p0?.y = event.rawY - p0!!.height/2
         }
+        gDetector.onTouchEvent(event)
         return true
     }
     override fun onDown(p0: MotionEvent?): Boolean {
+
         return true
     }
 
@@ -107,7 +112,25 @@ class MainActivity : AppCompatActivity(),GestureDetector.OnGestureListener,View.
     }
 
     override fun onSingleTapUp(p0: MotionEvent?): Boolean {
-        //TODO("Not yet implemented")
+        if(check) {
+            control = true
+            mper.reset()
+            mper = MediaPlayer.create(this, R.raw.shoot)
+            mper.start()
+            GlobalScope.launch(Dispatchers.Main) {
+                fly.setImageResource(R.drawable.shoot1)
+                delay(25)
+                fly.setImageResource(R.drawable.shoot2)
+                delay(25)
+                fly.setImageResource(R.drawable.shoot3)
+                delay(25)
+                fly.setImageResource(R.drawable.shoot4)
+                delay(25)
+                fly.setImageResource(R.drawable.shoot5)
+                delay(25)
+            }
+        }
+        control=false
         return true
     }
 
@@ -123,6 +146,5 @@ class MainActivity : AppCompatActivity(),GestureDetector.OnGestureListener,View.
     override fun onFling(p0: MotionEvent?, p1: MotionEvent?, p2: Float, p3: Float): Boolean {
         return true
     }
-
 
 }
