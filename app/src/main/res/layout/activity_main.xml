@@ -47,4 +47,13 @@
         app:layout_constraintTop_toTopOf="@+id/img1"
         app:srcCompat="@drawable/selfpicture" />
 
+    <ImageView
+        android:id="@+id/fly"
+        android:layout_width="207dp"
+        android:layout_height="146dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/fly1" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
