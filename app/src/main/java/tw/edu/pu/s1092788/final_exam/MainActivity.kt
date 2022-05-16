@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity(),GestureDetector.OnGestureListener,View.
     lateinit var binding: ActivityMainBinding
     lateinit var gDetector: GestureDetector
     lateinit var mper: MediaPlayer
-    var control:Boolean=false
+    var control:Boolean = false
     var check:Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         lateinit var job: Job
@@ -49,19 +49,12 @@ class MainActivity : AppCompatActivity(),GestureDetector.OnGestureListener,View.
         binding.img1.setOnClickListener(object:View.OnClickListener{
             override fun onClick(p0: View?) {
                 check = !check
-
-
                 if(check==false){
                     img1.setImageResource(R.drawable.start)
-
                 }else{
                     img1.setImageResource(R.drawable.stop)
-
                 }
-
-
             }
-
         }
         )
 
@@ -71,11 +64,9 @@ class MainActivity : AppCompatActivity(),GestureDetector.OnGestureListener,View.
                     val canvas: Canvas = binding.mysv.holder.lockCanvas()
                     binding.mysv.drawSomething(canvas)
                     binding.mysv.holder.unlockCanvasAndPost(canvas)
-
                 }
-                delay(25)
+                delay(1)
             }
-
         }
 
         switch = GlobalScope.launch(Dispatchers.Main) {
@@ -88,7 +79,6 @@ class MainActivity : AppCompatActivity(),GestureDetector.OnGestureListener,View.
                 }
                 delay(25)
             }
-
         }
 
         //設定螢幕水平顯示
